@@ -6,6 +6,7 @@ class Board extends React.Component{
         super(props);
         this.state = {
             player:1,
+            win:null,
             board:[
                 [null,null,null],
                 [null,null,null],
@@ -16,7 +17,7 @@ class Board extends React.Component{
     }
     handleClick(i,j){
         let copy = [...this.state.board];
-        copy[i][j] =+ this.state.player==1?"o":"x";
+        copy[i][j] =+ this.state.player==1?"O":"X";
         this.state.board = copy;
         if(this.state.player == 1){
             this.setState({player:2});
@@ -31,19 +32,14 @@ class Board extends React.Component{
         for(var i =0;i<3;i++){
             for(var j=0;j<3;j++){
                 console.log(this.state.board[i][j]);
-                if(this.state.board[i][j]=="x"){
+                if(this.state.board[i][j]=="X"){
                     arr[i][j]=-1;
                 }
-                else if(this.state.board[i][j]=="o"){
+                else if(this.state.board[i][j]=="O"){
                     arr[i][j]=1;
                 }else{
                     arr[i][j]=0;
                 }
-            }
-        }
-        for(var i =0;i<3;i++){
-            for(var j=0;j<3;j++){
-                console.log(arr[i][j]+"\n");
             }
         }
        for(var i = 0; i<3;i++){
@@ -53,12 +49,12 @@ class Board extends React.Component{
             }
             if(rowSum === 3)
             {
-                alert("Circle WIN!");
+                this.setState({win:"Player 1"});
                 break;
             }
             else if(rowSum === -3)
             {
-                alert("Cross WIN!");
+                this.setState({win:"Player 2"});
                 break;
             }                
         }
@@ -70,47 +66,42 @@ class Board extends React.Component{
             }
             if(colSum === 3)
             {
-                alert("Circle WIN!");
+                this.setState({win:"Player 1"});
                 break;
             }
             else if(colSum === -3)
             {
-                alert("Cross WIN!");
+                this.setState({win:"Player 2"});
                 break;
             }
         }
     
         if(arr[0][0] + arr[1][1] + arr[2][2] === 3)
-            alert("Circle WIN!");
+            this.setState({win:"Player 1"});
         else if(arr[0][0] + arr[1][1] + arr[2][2] === -3)
-            alert("Cross WIN!");
+            this.setState({win:"Player 2"});
     
         if(arr[2][0] + arr[1][1] + arr[0][2] === 3)
-            alert("Circle WIN!");
+            this.setState({win:"Player 1"});
         else if(arr[2][0] + arr[1][1] + arr[0][2] === -3)
-            alert("Cross WIN!");
+            this.setState({win:"Player 2"});
     }
 
     render(){
         return <div>
             <h4>Turn: Player {this.state.player}</h4>
-            <table align="center">
-                <tr>
-                    <td><button  onClick={()=>this.handleClick(0,0)}>{this.state.board[0][0]==null?"?":this.state.board[0][0]}</button></td>
-                    <td><button  onClick={()=>this.handleClick(0,1)}>{this.state.board[0][1]==null?"?":this.state.board[0][1]}</button></td>
-                    <td><button  onClick={()=>this.handleClick(0,2)}>{this.state.board[0][2]==null?"?":this.state.board[0][2]}</button></td>
-                </tr>
-                <tr>
-                    <td><button  onClick={()=>this.handleClick(1,0)}>{this.state.board[1][0]==null?"?":this.state.board[1][0]}</button></td>
-                    <td><button  onClick={()=>this.handleClick(1,1)}>{this.state.board[1][1]==null?"?":this.state.board[1][1]}</button></td>
-                    <td><button  onClick={()=>this.handleClick(1,2)}>{this.state.board[1][2]==null?"?":this.state.board[1][2]}</button></td>
-                </tr>
-                <tr>
-                    <td><button  onClick={()=>this.handleClick(2,0)}>{this.state.board[2][0]==null?"?":this.state.board[2][0]}</button></td>
-                    <td><button  onClick={()=>this.handleClick(2,1)}>{this.state.board[2][1]==null?"?":this.state.board[2][1]}</button></td>
-                    <td><button  onClick={()=>this.handleClick(2,2)}>{this.state.board[2][2]==null?"?":this.state.board[2][2]}</button></td>
-                </tr>
-            </table>
+            <div class="game-board">
+                <div class="box" onClick={()=>this.handleClick(0,0)}>{this.state.board[0][0]}</div>
+                <div class="box" onClick={()=>this.handleClick(0,1)}>{this.state.board[0][1]}</div>
+                <div class="box" onClick={()=>this.handleClick(0,2)}>{this.state.board[0][2]}</div>
+                <div class="box" onClick={()=>this.handleClick(1,0)}>{this.state.board[1][0]}</div>
+                <div class="box" onClick={()=>this.handleClick(1,1)}>{this.state.board[1][1]}</div>
+                <div class="box" onClick={()=>this.handleClick(1,2)}>{this.state.board[1][2]}</div>
+                <div class="box" onClick={()=>this.handleClick(2,0)}>{this.state.board[2][0]}</div>
+                <div class="box" onClick={()=>this.handleClick(2,1)}>{this.state.board[2][1]}</div>
+                <div class="box" onClick={()=>this.handleClick(2,2)}>{this.state.board[2][2]}</div>
+            </div>
+            {this.state.win!=null?<h5>{this.state.win} has won!!!</h5>:""}
         </div>
     }
 }

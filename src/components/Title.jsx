@@ -5,7 +5,7 @@ class Title extends React.Component{
         super(props);
     }
     render(){
-        return <div><h1>The Byte Developer</h1><h2>Tic Tac Toe</h2></div>
+        return <div><h2>Tic Tac Toe</h2></div>
     }
 }
 
